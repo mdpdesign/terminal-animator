@@ -1,0 +1,21 @@
+directives:
+  clear: false
+  splitByLine: true
+  maxDelay: 0.6
+  endNewLines: 0
+frames:
+  - |-
+    Memory checked
+    Quantum CPU checked
+    ROM version 9303
+    Warming up 128 quantum cores...  DONE
+    Initializing controllers...      DONE
+    Initializing connection...       DONE
+    Booting from Hard Disk...        DONE
+
+    The Terminal Animator personal computer
+    Version 1.00 (C)Copyright Go Terminal Animator systems inc. 2023
+    Terminal Animator OS 1.00 loaded
+    System ready!
+
+    # A:
