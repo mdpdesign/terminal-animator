@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"math/rand"
@@ -12,6 +13,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+type YamlConfig struct {
+	AnimationFiles []string `yaml:"animationFiles"`
+}
+
 type FrameConfig struct {
 	Directives struct {
 		Clear       bool    `yaml:"clear,omitempty"`
@@ -21,7 +26,7 @@ type FrameConfig struct {
 		MaxDelay    float32 `yaml:"maxDelay,omitempty"`
 		EndNewLines int     `yaml:"endNewLines,omitempty"`
 	}
-	Frames []string
+	Frames []string `yaml:"frames"`
 }
 
 func clearText(s string) string {
@@ -43,18 +48,29 @@ func clearTerminal() {
 }
 
 func main() {
-	fileList := []string{
-		"001-boot.yaml",
-		"002-boot.yaml",
-		"003-load.yaml",
-		"004-welcome.yaml",
-		"005-confirm.yaml",
-		"006-outro.yaml",
+	fileList := YamlConfig{}
+
+	configFile := flag.String("config", "", "Configuration file path for animation")
+	flag.Parse()
+
+	if *configFile == "" {
+		flag.CommandLine.Usage()
+		os.Exit(2)
+	}
+
+	data, err := os.ReadFile(*configFile)
+	if err != nil {
+		log.Fatalf("error occurred while reading file: %s, %v", *configFile, err)
+	}
+
+	err = yaml.Unmarshal([]byte(data), &fileList)
+	if err != nil {
+		log.Fatalf("error parsing Yaml file: %v", err)
 	}
 
 	clearTerminal()
 
-	for _, file := range fileList {
+	for _, file := range fileList.AnimationFiles {
 		fCfg := FrameConfig{}
 
 		data, err := os.ReadFile(file)
