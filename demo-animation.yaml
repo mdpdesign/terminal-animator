@@ -1,7 +1,0 @@
-animationFiles:
-  - demo-animation/001-boot.yaml
-  - demo-animation/002-boot.yaml
-  - demo-animation/003-load.yaml
-  - demo-animation/004-welcome.yaml
-  - demo-animation/005-confirm.yaml
-  - demo-animation/006-outro.yaml

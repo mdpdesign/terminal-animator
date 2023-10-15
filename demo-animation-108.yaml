@@ -1,0 +1,7 @@
+animationFiles:
+  - demo-animation-width-108/001-boot.yaml
+  - demo-animation-width-108/002-boot.yaml
+  - demo-animation-width-108/003-load.yaml
+  - demo-animation-width-108/004-welcome.yaml
+  - demo-animation-width-108/005-confirm.yaml
+  - demo-animation-width-108/006-outro.yaml

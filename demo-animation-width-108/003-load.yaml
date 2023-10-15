@@ -1,0 +1,13 @@
+directives:
+  clear: true
+  maxDelay: 0.5
+  endNewLines: 2
+frames:
+  - l
+  - lo
+  - load
+  - load-we
+  - load-welco
+  - load-welcome-
+  - load-welcome-mess
+  - load-welcome-message
