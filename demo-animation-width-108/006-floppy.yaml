@@ -1,6 +1,5 @@
 directives:
-  clear: false
-  splitByLine: true
+  type: printer
   maxDelay: 0.4
   endNewLines: 1
 frames:

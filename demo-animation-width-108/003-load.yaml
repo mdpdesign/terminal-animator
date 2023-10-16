@@ -1,5 +1,5 @@
 directives:
-  clear: true
+  type: clear-line
   maxDelay: 0.5
   endNewLines: 2
 frames:

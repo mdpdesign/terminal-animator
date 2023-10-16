@@ -1,5 +1,5 @@
 directives:
-  clear: true
+  type: loop
   loop: 5
   endNewLines: 1
 frames:
