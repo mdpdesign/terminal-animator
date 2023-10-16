@@ -21,6 +21,7 @@ type FrameConfig struct {
 	Directives struct {
 		Type        string  `yaml:"type"`
 		Loop        int     `yaml:"loop,omitempty"`
+		Word        bool    `yaml:"word,omitempty"`
 		MaxDelay    float32 `yaml:"maxDelay,omitempty"`
 		EndNewLines int     `yaml:"endNewLines,omitempty"`
 	}
@@ -87,6 +88,7 @@ func main() {
 
 		animationType := fCfg.Directives.Type
 		loop := fCfg.Directives.Loop
+		typeWriterWordSplit := fCfg.Directives.Word
 		maxDelay := fCfg.Directives.MaxDelay
 		endNewLines := fCfg.Directives.EndNewLines
 
@@ -96,13 +98,25 @@ func main() {
 
 		for _, frame := range fCfg.Frames {
 			switch animationType {
-			case "loop":
-				frames := fCfg.Frames
+			case "typewriter":
 
-				for i := 0; i < loop; i++ {
-					fmt.Printf("%s\r", frames[i%len(frames)])
-					time.Sleep(time.Duration(maxDelay * float32(time.Second)))
+				var format string
+				var frameParts []string
+
+				if typeWriterWordSplit {
+					frameParts = strings.Split(frame, " ")
+					format = "%s "
+				} else {
+					frameParts = strings.Split(frame, "")
+					format = "%s"
 				}
+
+				for _, el := range frameParts {
+					fmt.Printf(format, el)
+					randomDelay(maxDelay)
+				}
+
+				fmt.Println("")
 			case "printer":
 				frameParts := strings.Split(frame, "\n")
 
@@ -110,6 +124,13 @@ func main() {
 					line = clearText(line)
 					fmt.Printf("%s\n", line)
 					randomDelay(maxDelay)
+				}
+			case "loop":
+				frames := fCfg.Frames
+
+				for i := 0; i < loop; i++ {
+					fmt.Printf("%s\r", frames[i%len(frames)])
+					time.Sleep(time.Duration(maxDelay * float32(time.Second)))
 				}
 			case "clear-line":
 				fmt.Printf("%s\r", clearText(frame))
