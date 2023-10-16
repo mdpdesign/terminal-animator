@@ -1,7 +1,0 @@
-directives:
-  clear: true
-  loop: 5
-  endNewLines: 1
-frames:
-  - '                                                CONFIRM Y/N                                                 '
-  - '                                                                                                            '

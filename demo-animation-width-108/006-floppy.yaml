@@ -1,7 +1,7 @@
 directives:
   clear: false
   splitByLine: true
-  maxDelay: 0.5
+  maxDelay: 0.4
   endNewLines: 1
 frames:
   - |-
