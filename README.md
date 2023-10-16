@@ -10,4 +10,22 @@ https://github.com/mdpdesign/terminal-animator/assets/5243838/5486ef7a-4264-48e1
 
 ## Docs
 
-Coming soon..
+Usage:
+
+```shell
+terminal-animator -h
+
+Usage of terminal-animator:
+  -config string
+        Configuration file path for animation
+```
+
+Example:
+
+```shell
+terminal-animator -config demo-animation-108.yaml
+```
+
+### Animation files documentation
+
+Coming soon...
