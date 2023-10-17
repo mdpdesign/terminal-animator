@@ -5,6 +5,7 @@ directives:
   endNewLines: 1
 frames:
   - Word based typewriter
+  - ''
   - bash - GNU Bourne-Again SHell
   - Bash is Copyright Â© 1989-2009 by the Free Software Foundation, Inc.
   - |-

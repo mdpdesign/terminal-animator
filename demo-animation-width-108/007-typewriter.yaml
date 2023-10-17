@@ -4,7 +4,10 @@ directives:
   maxDelay: 0.04
   endNewLines: 1
 frames:
-  - Character based typewriter
+  - -------------
+  - ''
+  - Character based typewriter (default)
+  - ''
   - bash - GNU Bourne-Again SHell
   - Bash is Copyright Â© 1989-2009 by the Free Software Foundation, Inc.
   - |-
