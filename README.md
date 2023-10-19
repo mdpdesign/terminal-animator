@@ -26,6 +26,63 @@ Example:
 terminal-animator -config demo-animation-108.yaml
 ```
 
-### Animation files documentation
+### Configuration documentation
 
-Coming soon...
+Terminal Animator is configured by specifying a list of animation files:
+
+```yaml
+animationFiles:
+  - demo-animation-width-108/001-boot.yaml
+  - demo-animation-width-108/002-boot.yaml
+  - demo-animation-width-108/003-load.yaml
+  - demo-animation-width-108/004-welcome.yaml
+  - (...)
+```
+
+Each file describes the animation type and additional configuration for that animation
+
+#### Animation files - supported fields:
+
+- directives (`[]string`): Animation configuration, see below
+- frames (`[]string`): List of text frames of the animation
+
+##### Directives:
+
+- type (`string`): Animation type, currently supported animations: `clear-line`, `clear-screen`,
+`loop`, `typewriter`
+- maxDelay (`float32`): Random delay duration between "rendering" frames, for `loop` animation
+it's not effective and delay is `0.5`
+- endNewLines (`int`): Number of newlines to add after that particular animation
+- loop (`int`): Number of how many times the frames will be repeated in `loop` animation.
+Only applicable to `loop` animation
+- word (`bool`): For `typewriter` animation, whether to split animation frame by word
+or by character (default)
+
+Examples:
+
+```yaml
+directives:
+  type: clear-line
+  maxDelay: 0.5
+  endNewLines: 2
+frames:
+  - 00010 KB OK
+  - 00025 KB OK
+  - 00048 KB OK
+  - 00128 KB OK
+  - 00168 KB OK
+  - 00256 KB OK
+  - 00640 KB OK
+```
+
+```yaml
+directives:
+  type: typewriter
+  word: false # default, can be optional
+  maxDelay: 0.2
+  endNewLines: 0
+frames:
+  - '# A: load-welcome-message'
+```
+
+For more examples, check the demo animation
