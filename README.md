@@ -52,6 +52,7 @@ Each file describes the animation type and additional settings for that animatio
   - `clear-line`: Animation that renders frames a on single line, clearing any previous frame
   - `clear-screen`: Animation that redraws whole screen, clearing whole screen before each frame
   - `loop`: Animation that loops specified amount of times after rendering all frames
+  - `printer`: Animation that renders each frame line by line, split by newline - "\n"
   - `typewriter`: Typewriter animation effect, either by character or by word
 - maxDelay (`float32`): Random delay duration between rendering frames, for `loop` animation it's not effective and delay is `0.5`
 - endNewLines (`int`): Number of newlines to add after that particular animation
