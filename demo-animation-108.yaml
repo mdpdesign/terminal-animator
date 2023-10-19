@@ -4,6 +4,8 @@ animationFiles:
   - demo-animation-width-108/003-load.yaml
   - demo-animation-width-108/004-welcome.yaml
   - demo-animation-width-108/005-confirm.yaml
-  - demo-animation-width-108/006-floppy.yaml
+  - demo-animation-width-108/006-typewriter.yaml
+  - demo-animation-width-108/007-typewriter.yaml
+  - demo-animation-width-108/008-floppy.yaml
   - demo-animation-width-108/005-confirm.yaml  # reuse animation
-  - demo-animation-width-108/007-outro.yaml
+  - demo-animation-width-108/009-outro.yaml

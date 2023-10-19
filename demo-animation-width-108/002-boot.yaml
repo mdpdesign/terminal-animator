@@ -1,8 +1,7 @@
 directives:
-  clear: false
-  splitByLine: true
+  type: printer
   maxDelay: 0.6
-  endNewLines: 0
+  endNewLines: 1
 frames:
   - |-
     Memory checked
@@ -17,5 +16,3 @@ frames:
     Version 1.00 (C)Copyright Go Terminal Animator systems inc. 2023
     Terminal Animator OS 1.00 loaded
     System ready!
-
-    # A:

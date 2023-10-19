@@ -1,13 +1,6 @@
 directives:
-  clear: true
-  maxDelay: 0.5
-  endNewLines: 2
+  type: typewriter
+  maxDelay: 0.2
+  endNewLines: 0
 frames:
-  - l
-  - lo
-  - load
-  - load-we
-  - load-welco
-  - load-welcome-
-  - load-welcome-mess
-  - load-welcome-message
+  - '# A: load-welcome-message'

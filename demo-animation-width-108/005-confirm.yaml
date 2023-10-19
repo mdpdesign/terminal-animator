@@ -1,7 +1,7 @@
 directives:
-  clear: true
-  loop: 5
-  endNewLines: 1
+  type: loop
+  loop: 4
+  endNewLines: 2
 frames:
   - '                                                CONFIRM Y/N                                                 '
   - '                                                                                                            '
