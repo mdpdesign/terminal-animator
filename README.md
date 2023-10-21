@@ -43,16 +43,16 @@ Each file describes the animation type and additional settings for that animatio
 
 #### Animation files - supported fields:
 
-- directives (`[]string`): Defines type and animation settings, see below
+- directives (`map[string]any`): Defines type and animation settings, see below
 - frames (`[]string`): List of text frames of the animation
 
 ##### Directives:
 
-- type (`string`): Animation type, currently supported animations: `clear-line`, `clear-screen`, `loop`, `typewriter`
+- type (`string`): Animation type, currently supported animations: `clear-line`, `clear-screen`, `loop`, `printer`, `typewriter`
   - `clear-line`: Animation that renders frames a on single line, clearing any previous frame
   - `clear-screen`: Animation that redraws whole screen, clearing whole screen before each frame
   - `loop`: Animation that loops specified amount of times after rendering all frames
-  - `printer`: Animation that renders each frame line by line, split by newline - "\n"
+  - `printer`: Animation that renders each frame line by line, split by newline - `\n`
   - `typewriter`: Typewriter animation effect, either by character or by word
 - maxDelay (`float32`): Random delay duration between rendering frames
 - endNewLines (`int`): Number of newlines to add after that particular animation
