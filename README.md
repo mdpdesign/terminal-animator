@@ -55,6 +55,7 @@ Each file describes the animation type and additional settings for that animatio
   - `printer`: Animation that renders each frame line by line, split by newline - `\n`
   - `typewriter`: Typewriter animation effect, either by character or by word
 - maxDelay (`float32`): Random delay duration between rendering frames
+- evenDelay (`bool`): Whether delay between rendering frames should be even
 - endNewLines (`int`): Number of newlines to add after that particular animation
 - loop (`int`): Number of how many times the animation will be repeated. Only applicable to `loop` animation
 - word (`bool`): For `typewriter` animation, whether to split animation frame by word or by character (**default**)
