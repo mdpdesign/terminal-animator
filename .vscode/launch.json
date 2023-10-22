@@ -22,7 +22,7 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "args": [
-                "-config=demo-animation.yaml"
+                "-config=demo-animation-108.yaml"
             ],
             "console": "integratedTerminal"
         },
