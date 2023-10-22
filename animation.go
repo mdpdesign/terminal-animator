@@ -146,7 +146,7 @@ func (a TypewriterAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func MakeAnimation(config FrameConfig) (Animation, error) {
+func MakeAnimation(config *FrameConfig) (Animation, error) {
 	var a Animation
 
 	switch config.Directives.Type {
