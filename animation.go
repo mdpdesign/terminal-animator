@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-type Animation interface {
+type IAnimation interface {
 	Render()
 }
 
@@ -45,13 +45,6 @@ type TypewriterAnimation struct {
 	frames      []string
 }
 
-func NewClearLineAnimation(maxDelay float32, endNewLines int, frames []string) *ClearLineAnimation {
-	return &ClearLineAnimation{
-		maxDelay:    maxDelay,
-		endNewLines: endNewLines,
-		frames:      frames,
-	}
-}
 func (a ClearLineAnimation) Render() {
 	for _, frame := range a.frames {
 		fmt.Printf("%s\r", clearText(frame))
@@ -60,13 +53,6 @@ func (a ClearLineAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func NewClearScreenAnimation(maxDelay float32, endNewLines int, frames []string) *ClearScreenAnimation {
-	return &ClearScreenAnimation{
-		maxDelay:    maxDelay,
-		endNewLines: endNewLines,
-		frames:      frames,
-	}
-}
 func (a ClearScreenAnimation) Render() {
 	for _, frame := range a.frames {
 		clearTerminal()
@@ -76,14 +62,6 @@ func (a ClearScreenAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func NewLoopAnimation(loop int, endNewLines int, frames []string) *LoopAnimation {
-	return &LoopAnimation{
-		loop:        loop,
-		maxDelay:    0.5,
-		endNewLines: endNewLines,
-		frames:      frames,
-	}
-}
 func (a LoopAnimation) Render() {
 	frames := a.frames
 
@@ -95,13 +73,6 @@ func (a LoopAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func NewPrinterAnimation(maxDelay float32, endNewLines int, frames []string) *PrinterAnimation {
-	return &PrinterAnimation{
-		maxDelay:    maxDelay,
-		endNewLines: endNewLines,
-		frames:      frames,
-	}
-}
 func (a PrinterAnimation) Render() {
 	for _, frame := range a.frames {
 		frameParts := strings.Split(frame, "\n")
@@ -115,14 +86,6 @@ func (a PrinterAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func NewTypewriterAnimation(word bool, maxDelay float32, endNewLines int, frames []string) *TypewriterAnimation {
-	return &TypewriterAnimation{
-		word:        word,
-		maxDelay:    maxDelay,
-		endNewLines: endNewLines,
-		frames:      frames,
-	}
-}
 func (a TypewriterAnimation) Render() {
 	for _, frame := range a.frames {
 		var format string
@@ -146,43 +109,43 @@ func (a TypewriterAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func MakeAnimation(config *FrameConfig) (Animation, error) {
-	var a Animation
+func NewAnimation(config *FrameConfig) (IAnimation, error) {
+	var a IAnimation
 
 	switch config.Directives.Type {
 	case "typewriter":
-		a = NewTypewriterAnimation(
+		a = &TypewriterAnimation{
 			config.Directives.Word,
 			config.Directives.MaxDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
-		)
+		}
 	case "printer":
-		a = NewPrinterAnimation(
+		a = &PrinterAnimation{
 			config.Directives.MaxDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
-		)
+		}
 	case "loop":
-		a = NewLoopAnimation(
+		a = &LoopAnimation{
 			config.Directives.Loop,
+			0.5,
 			config.Directives.EndNewLines,
 			config.Frames,
-		)
+		}
 	case "clear-line":
-		a = NewClearLineAnimation(
+		a = &ClearLineAnimation{
 			config.Directives.MaxDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
-		)
+		}
 	case "clear-screen":
-		a = NewClearScreenAnimation(
+		a = &ClearScreenAnimation{
 			config.Directives.MaxDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
-		)
+		}
 	default:
-		clearTerminal()
 		return nil, fmt.Errorf(
 			"animation type '%s' not supported, allowed types: %s",
 			config.Directives.Type,

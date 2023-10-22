@@ -59,7 +59,7 @@ func main() {
 			log.Fatalf("error parsing Yaml file: %v", err)
 		}
 
-		a, err := MakeAnimation(&fCfg)
+		a, err := NewAnimation(&fCfg)
 		if err != nil {
 			log.Fatalf("error creating animation for: %s, %s", file, err)
 		}
