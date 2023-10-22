@@ -60,6 +60,10 @@ func main() {
 			log.Fatalf("error parsing Yaml file: %v", err)
 		}
 
+		if fCfg.Directives.MaxDelay == 0 {
+			fCfg.Directives.MaxDelay = 0.5
+		}
+
 		a, err := NewAnimation(&fCfg)
 		if err != nil {
 			log.Fatalf("error creating animation for: %s, %s", file, err)
