@@ -18,6 +18,7 @@ type FrameConfig struct {
 		Loop        int     `yaml:"loop,omitempty"`
 		Word        bool    `yaml:"word,omitempty"`
 		MaxDelay    float32 `yaml:"maxDelay,omitempty"`
+		EvenDelay   bool    `yaml:"evenDelay,omitempty"`
 		EndNewLines int     `yaml:"endNewLines,omitempty"`
 	}
 	Frames []string `yaml:"frames"`

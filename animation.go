@@ -15,12 +15,14 @@ type IAnimation interface {
 
 type ClearLineAnimation struct {
 	maxDelay    float32
+	evenDelay   bool
 	endNewLines int
 	frames      []string
 }
 
 type ClearScreenAnimation struct {
 	maxDelay    float32
+	evenDelay   bool
 	endNewLines int
 	frames      []string
 }
@@ -34,6 +36,7 @@ type LoopAnimation struct {
 
 type PrinterAnimation struct {
 	maxDelay    float32
+	evenDelay   bool
 	endNewLines int
 	frames      []string
 }
@@ -41,6 +44,7 @@ type PrinterAnimation struct {
 type TypewriterAnimation struct {
 	word        bool
 	maxDelay    float32
+	evenDelay   bool
 	endNewLines int
 	frames      []string
 }
@@ -48,7 +52,7 @@ type TypewriterAnimation struct {
 func (a ClearLineAnimation) Render() {
 	for _, frame := range a.frames {
 		fmt.Printf("%s\r", clearText(frame))
-		randomDelay(a.maxDelay)
+		animationDelay(a.maxDelay, a.evenDelay)
 	}
 	endAnimation(a.endNewLines)
 }
@@ -57,7 +61,7 @@ func (a ClearScreenAnimation) Render() {
 	for _, frame := range a.frames {
 		clearTerminal()
 		fmt.Printf("%s", clearText(frame))
-		randomDelay(a.maxDelay)
+		animationDelay(a.maxDelay, a.evenDelay)
 	}
 	endAnimation(a.endNewLines)
 }
@@ -67,7 +71,7 @@ func (a LoopAnimation) Render() {
 
 	for i := 0; i < a.loop; i++ {
 		fmt.Printf("%s\r", frames[i%len(frames)])
-		time.Sleep(time.Duration(a.maxDelay * float32(time.Second)))
+		animationDelay(a.maxDelay, true)
 	}
 
 	endAnimation(a.endNewLines)
@@ -80,7 +84,7 @@ func (a PrinterAnimation) Render() {
 		for _, line := range frameParts {
 			line = clearText(line)
 			fmt.Printf("%s\n", line)
-			randomDelay(a.maxDelay)
+			animationDelay(a.maxDelay, a.evenDelay)
 		}
 	}
 	endAnimation(a.endNewLines)
@@ -101,7 +105,7 @@ func (a TypewriterAnimation) Render() {
 
 		for _, el := range frameParts {
 			fmt.Printf(format, el)
-			randomDelay(a.maxDelay)
+			animationDelay(a.maxDelay, a.evenDelay)
 		}
 
 		fmt.Println("")
@@ -117,31 +121,35 @@ func NewAnimation(config *FrameConfig) (IAnimation, error) {
 		a = &TypewriterAnimation{
 			config.Directives.Word,
 			config.Directives.MaxDelay,
+			config.Directives.EvenDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
 		}
 	case "printer":
 		a = &PrinterAnimation{
 			config.Directives.MaxDelay,
+			config.Directives.EvenDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
 		}
 	case "loop":
 		a = &LoopAnimation{
 			config.Directives.Loop,
-			0.5,
+			config.Directives.MaxDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
 		}
 	case "clear-line":
 		a = &ClearLineAnimation{
 			config.Directives.MaxDelay,
+			config.Directives.EvenDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
 		}
 	case "clear-screen":
 		a = &ClearScreenAnimation{
 			config.Directives.MaxDelay,
+			config.Directives.EvenDelay,
 			config.Directives.EndNewLines,
 			config.Frames,
 		}
@@ -160,9 +168,13 @@ func getAnimationtypes() []string {
 	return []string{"typewriter", "printer", "loop", "clear-line", "clear-screen"}
 }
 
-func randomDelay(maxDelay float32) {
-	r := 0 + rand.Float32()*maxDelay
-	time.Sleep(time.Duration(r * float32(time.Second)))
+func animationDelay(maxDelay float32, even bool) {
+	if even {
+		time.Sleep(time.Duration(maxDelay * float32(time.Second)))
+	} else {
+		r := 0 + rand.Float32()*maxDelay
+		time.Sleep(time.Duration(r * float32(time.Second)))
+	}
 }
 
 func clearText(s string) string {
