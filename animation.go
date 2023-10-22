@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -147,7 +146,7 @@ func (a TypewriterAnimation) Render() {
 	endAnimation(a.endNewLines)
 }
 
-func MakeAnimation(config FrameConfig) Animation {
+func MakeAnimation(config FrameConfig) (Animation, error) {
 	var a Animation
 
 	switch config.Directives.Type {
@@ -184,15 +183,14 @@ func MakeAnimation(config FrameConfig) Animation {
 		)
 	default:
 		clearTerminal()
-
-		log.Fatalf(
-			"error animation type '%s' not supported, allowed types: %s",
+		return nil, fmt.Errorf(
+			"animation type '%s' not supported, allowed types: %s",
 			config.Directives.Type,
 			getAnimationtypes(),
 		)
 	}
 
-	return a
+	return a, nil
 }
 
 func getAnimationtypes() []string {
