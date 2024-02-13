@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -170,6 +172,114 @@ func TestNewAnimation(t *testing.T) {
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewAnimation() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func TestIAnimation_Render(t *testing.T) {
+	tests := []struct {
+		name      string
+		animation IAnimation
+		want      string
+	}{
+		{
+			name: "Test ClearLineAnimation Render",
+			animation: ClearLineAnimation{
+				maxDelay:    0,
+				evenDelay:   true,
+				endNewLines: 0,
+				frames: []string{
+					"Frame one",
+					"Frame two",
+				},
+			},
+			want: "Frame one\rFrame two\r",
+		},
+		{
+			name: "Test ClearScreenAnimation Render",
+			animation: ClearScreenAnimation{
+				maxDelay:    0,
+				evenDelay:   true,
+				endNewLines: 1,
+				frames: []string{
+					"Frame one",
+					"Frame two",
+				},
+			},
+			want: "Frame oneFrame two\n",
+		},
+		{
+			name: "Test LoopAnimation Render",
+			animation: LoopAnimation{
+				loop:        3,
+				maxDelay:    0,
+				endNewLines: 1,
+				frames: []string{
+					"Frame one",
+				},
+			},
+			want: "Frame one\rFrame one\rFrame one\r\n",
+		},
+		{
+			name: "Test PrinterAnimation Render",
+			animation: PrinterAnimation{
+				maxDelay:    0,
+				evenDelay:   true,
+				endNewLines: 0,
+				frames: []string{
+					"Frame one",
+					"Frame two",
+					"Frame three",
+				},
+			},
+			want: "Frame one\nFrame two\nFrame three\n",
+		},
+		{
+			name: "Test TypewriterAnimation word Render",
+			animation: TypewriterAnimation{
+				word:        true,
+				maxDelay:    0,
+				evenDelay:   true,
+				endNewLines: 0,
+				frames: []string{
+					"This is a typewriter word",
+				},
+			},
+			want: "This is a typewriter word \n",
+		},
+		{
+			name: "Test TypewriterAnimation Render",
+			animation: TypewriterAnimation{
+				word:        false,
+				maxDelay:    0,
+				evenDelay:   false,
+				endNewLines: 0,
+				frames: []string{
+					"This is a typewriter animation",
+				},
+			},
+			want: "This is a typewriter animation\n",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			a := tt.animation
+
+			rescueStdout := os.Stdout
+			r, w, _ := os.Pipe()
+			os.Stdout = w
+
+			a.Render()
+
+			w.Close()
+			out, _ := io.ReadAll(r)
+			os.Stdout = rescueStdout
+
+			if string(out) != tt.want {
+				t.Errorf("%T Render() = %#v, want '%#v'", a, string(out), tt.want)
+			}
+
 		})
 	}
 }
